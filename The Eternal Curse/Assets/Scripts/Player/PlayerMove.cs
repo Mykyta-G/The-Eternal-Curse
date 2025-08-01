@@ -14,11 +14,13 @@ public class PlayerMove : MonoBehaviour
     private float dashingCooldown = 1f;
     [SerializeField] private TrailRenderer tr;
     private Rigidbody2D rb;
+    private PlayerHealth playerHealth;
     
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
+        playerHealth = GetComponent<PlayerHealth>(); 
         
         if (rb != null)
         {
@@ -60,6 +62,12 @@ public class PlayerMove : MonoBehaviour
         canDash = false;
         isDashing = true;
         
+        // Make player invincible during dash
+        if (playerHealth != null)
+        {
+            playerHealth.isInvincible = true;
+        }
+        
         Vector2 dashDirection = moveInput;
         if (dashDirection.magnitude == 0)
         {
@@ -69,7 +77,7 @@ public class PlayerMove : MonoBehaviour
         
         if (rb != null)
         {
-            rb.linearVelocity = dashDirection * dashingPower; 
+            rb.linearVelocity = dashDirection * dashingPower;
         }
         
         tr.emitting = true;
@@ -77,9 +85,15 @@ public class PlayerMove : MonoBehaviour
         tr.emitting = false;
         isDashing = false;
         
+        // Remove invincibility after dash ends
+        if (playerHealth != null)
+        {
+            playerHealth.isInvincible = false;
+        }
+        
         if (rb != null)
         {
-            rb.linearVelocity = Vector2.zero; 
+            rb.linearVelocity = Vector2.zero;
         }
         
         yield return new WaitForSeconds(dashingCooldown);

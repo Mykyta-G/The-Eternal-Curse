@@ -4,6 +4,7 @@ public class Damage : MonoBehaviour
 {
     public PlayerHealth pHealth;
     public float damage;
+    
     void Start()
     {
         
@@ -18,7 +19,11 @@ public class Damage : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<PlayerHealth>().health -= damage;
+            PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damage); // Use the new method that checks invincibility
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ public class Damage : MonoBehaviour
             PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(damage); // Use the new method that checks invincibility
+                playerHealth.TakeDamage(damage);
             }
         }
     }

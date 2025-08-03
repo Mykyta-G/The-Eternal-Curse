@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5046223979008558709}
   - component: {fileID: 4753348000484885729}
   - component: {fileID: 1010851199501210324}
+  - component: {fileID: 1622921142546360931}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -383,3 +384,18 @@ MonoBehaviour:
   OnAimChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1622921142546360931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637520176786022895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f977770522a184eb54b68e5aeef84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSpeed: 1
+  mana: 0
+  armor: 0

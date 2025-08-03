@@ -12,6 +12,7 @@ public class CastProjectile : MonoBehaviour
     [SerializeField] private PlayerInputHandler inputHandler;
     
     private Vector2 direction;
+    private PlayerStats playerStats;
     
     void Start()
     {
@@ -20,6 +21,8 @@ public class CastProjectile : MonoBehaviour
         {
             firePoint = transform;
         }
+
+        playerStats = GetComponent<PlayerStats>();
         
         // Subscribe to input events
         if (inputHandler != null)
@@ -46,7 +49,11 @@ public class CastProjectile : MonoBehaviour
     {
         Debug.Log("CastProjectile: Received fire event with direction: " + aimDirection);
         direction = aimDirection;
-        FireProjectile();
+        if (playerStats.mana >= projectilePrefab.GetComponent<Projectile>().manaCost)
+        {
+            playerStats.useMana(projectilePrefab.GetComponent<Projectile>().manaCost);
+            FireProjectile();
+        }
     }
     
     public void FireProjectile()

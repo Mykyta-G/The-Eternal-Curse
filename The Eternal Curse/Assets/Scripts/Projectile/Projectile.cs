@@ -5,7 +5,8 @@ public class Projectile : MonoBehaviour
     [Header("Projectile Properties")]
     [SerializeField] private float speed = 10f;
     [SerializeField] private float lifetime = 5f;
-    [SerializeField] private int damage = 10;
+    [SerializeField] private int damage = 20;
+    public int manaCost = 10;
     [SerializeField] private LayerMask targetLayers = -1;
     
     [Header("Visual Effects")]

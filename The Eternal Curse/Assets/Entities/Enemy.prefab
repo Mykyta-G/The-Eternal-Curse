@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: -6083591162324730688}
   - component: {fileID: 4536443183687149866}
   - component: {fileID: 5698667203607309727}
-  - component: {fileID: 2052260522743789284}
+  - component: {fileID: -1931031825794161542}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,8 +171,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pHealth: {fileID: 0}
+  enemyHealth: {fileID: 0}
   damage: 50
---- !u!114 &2052260522743789284
+--- !u!114 &-1931031825794161542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,13 +182,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 872711474321893412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8bab2db1a74c4e2284a9dfad1aca5bc, type: 3}
+  m_Script: {fileID: 11500000, guid: b76eef26d981da948a720175ff4c337b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
-  maxHealth: 0
-  healthBar: {fileID: 7555519164899353321}
-  isInvincible: 0
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &4214343886324895411
 GameObject:
   m_ObjectHideFlags: 0

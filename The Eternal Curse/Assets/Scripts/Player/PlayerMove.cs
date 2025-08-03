@@ -14,13 +14,13 @@ public class PlayerMove : MonoBehaviour
     private float dashingCooldown = 1f;
     [SerializeField] private TrailRenderer tr;
     private Rigidbody2D rb;
-    private PlayerHealth playerHealth;
+    private Health playerHealth;
     
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
-        playerHealth = GetComponent<PlayerHealth>(); 
+        playerHealth = GetComponent<Health>(); 
         
         if (rb != null)
         {

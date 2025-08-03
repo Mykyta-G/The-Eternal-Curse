@@ -8,46 +8,48 @@ public class CastProjectile : MonoBehaviour
     [SerializeField] private float projectileSpeed = 10f;
     [SerializeField] private float projectileLifetime = 5f;
     
-    [Header("Input Settings")]
-    [SerializeField] private KeyCode fireKey = KeyCode.F;
+    [Header("Input Handler")]
+    [SerializeField] private PlayerInputHandler inputHandler;
     
-    [Header("Aiming")]
-    [SerializeField] private Camera playerCamera;
-    
-    private Vector2 mousePosition;
     private Vector2 direction;
     
     void Start()
     {
-        // If no camera is assigned, try to find the main camera
-        if (playerCamera == null)
-        {
-            playerCamera = Camera.main;
-        }
-        
         // If no fire point is assigned, use the player's position
         if (firePoint == null)
         {
             firePoint = transform;
         }
-    }
-
-    void Update()
-    {
-        // Get mouse position in world coordinates
-        mousePosition = playerCamera.ScreenToWorldPoint(Input.mousePosition);
         
-        // Calculate direction from player to mouse
-        direction = (mousePosition - (Vector2)transform.position).normalized;
-        
-        // Fire projectile when F is pressed
-        if (Input.GetKeyDown(fireKey))
+        // Subscribe to input events
+        if (inputHandler != null)
         {
-            FireProjectile();
+            inputHandler.OnFirePressed.AddListener(OnFirePressed);
+            Debug.Log("CastProjectile: Subscribed to PlayerInputHandler events");
+        }
+        else
+        {
+            Debug.LogError("CastProjectile: No PlayerInputHandler assigned!");
         }
     }
     
-    void FireProjectile()
+    void OnDestroy()
+    {
+        // Unsubscribe from events
+        if (inputHandler != null)
+        {
+            inputHandler.OnFirePressed.RemoveListener(OnFirePressed);
+        }
+    }
+    
+    private void OnFirePressed(Vector2 aimDirection)
+    {
+        Debug.Log("CastProjectile: Received fire event with direction: " + aimDirection);
+        direction = aimDirection;
+        FireProjectile();
+    }
+    
+    public void FireProjectile()
     {
         if (projectilePrefab == null)
         {
@@ -55,8 +57,11 @@ public class CastProjectile : MonoBehaviour
             return;
         }
         
+        // Create spawn position with Z = 0 for 2D
+        Vector3 spawnPosition = new Vector3(firePoint.position.x, firePoint.position.y, 0f);
+        
         // Instantiate projectile at fire point
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
         
         // Get the projectile component and set its direction and speed
         Projectile projectileComponent = projectile.GetComponent<Projectile>();
@@ -71,24 +76,20 @@ public class CastProjectile : MonoBehaviour
             if (rb != null)
             {
                 rb.linearVelocity = direction * projectileSpeed;
-                
-                // Destroy projectile after lifetime
                 Destroy(projectile, projectileLifetime);
             }
         }
+        
+        Debug.Log($"Fired projectile in direction: {direction}");
     }
     
-    // Optional: Visualize the aim direction in the editor
+    // Optional: Visualize the fire point in the editor
     void OnDrawGizmosSelected()
     {
         if (firePoint != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(firePoint.position, 0.1f);
-            
-            // Draw aim direction
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawRay(firePoint.position, direction * 2f);
         }
     }
 }

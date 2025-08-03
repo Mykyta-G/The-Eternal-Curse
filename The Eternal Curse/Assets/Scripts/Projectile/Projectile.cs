@@ -49,6 +49,14 @@ public class Projectile : MonoBehaviour
     
     void Update()
     {
+        // Ensure projectile stays at Z = 0 for 2D
+        if (transform.position.z != 0f)
+        {
+            Vector3 pos = transform.position;
+            pos.z = 0f;
+            transform.position = pos;
+        }
+        
         // Update lifetime
         currentLifetime += Time.deltaTime;
         if (currentLifetime >= lifetime)
@@ -60,15 +68,20 @@ public class Projectile : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the collided object is on target layers
-        if (((1 << other.gameObject.layer) & targetLayers) != 0)
-        {            
+        if (((1 << other.gameObject.layer) & targetLayers) != 0 && other.gameObject.tag != "Player")
+        {    
+            /*        
             // Spawn hit effect
             if (hitEffect != null)
             {
                 Instantiate(hitEffect, transform.position, Quaternion.identity);
             }
-            
+            */
             // Destroy projectile
+            if (other.gameObject.tag == "Enemy")
+            {
+                other.gameObject.GetComponent<Health>().TakeDamage(damage);
+            }
             if (destroyOnHit)
             {
                 DestroyProjectile();

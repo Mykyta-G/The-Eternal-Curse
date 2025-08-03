@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 1157512295}
   - component: {fileID: 1157512294}
   - component: {fileID: 1157512297}
+  - component: {fileID: 1157512298}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -367,6 +368,21 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1157512298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1157512293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370db6affe1a84d4d805510322c5d2d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FollowSpeed: 4
+  YOffset: 0
+  Target: {fileID: 1758470145}
 --- !u!1 &1237186725
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,6 +576,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aff6612a0ede4047b4451178ac3a2cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1758470145 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1920582749777150100, guid: fdb59d9ef8e78493983ee3883c09d188, type: 3}
+  m_PrefabInstance: {fileID: 2713045399696606923}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1781184881 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 872711474321893412, guid: c03713afb92524af7a1c027a6191606f, type: 3}
@@ -886,6 +907,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6083591162324730688, guid: c03713afb92524af7a1c027a6191606f, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -6083591162324730688, guid: c03713afb92524af7a1c027a6191606f, type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 872711474321893412, guid: c03713afb92524af7a1c027a6191606f, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -894,6 +923,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1758470129}
+    - target: {fileID: 4536443183687149866, guid: c03713afb92524af7a1c027a6191606f, type: 3}
+      propertyPath: stoppingDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5422615838770524991, guid: c03713afb92524af7a1c027a6191606f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7

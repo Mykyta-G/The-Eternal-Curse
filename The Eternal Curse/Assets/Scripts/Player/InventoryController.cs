@@ -1,29 +1,35 @@
 using UnityEngine;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
 
 public class InventoryController : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private InventoryPage inventoryUI;
 
-    public int inventorySize = 10;
+    [SerializeField] public PlayerInputHandler inputHandler;
 
-    public PlayerInputHandler inputHandler;
+    [Header("Settings")]
+    public int inventorySize = 10;
 
     private void Start()
     {
+        // Initialize the inventory with empty slots
         inventoryUI.InitializeInventoryUI(inventorySize);
 
-        if (inputHandler != null){
+        // Hook into the inventory input event
+        if (inputHandler != null)
+        {
             inputHandler.OnInvPressed.AddListener(OnInvPressed);
         }
         else
         {
-            Debug.LogError("CastProjectile: No PlayerInputHandler assigned!");
+            Debug.LogError("InventoryController: No PlayerInputHandler assigned!");
         }
     }
 
-    private void Update()
+    private void OnInvPressed(Vector2 _)
     {
-
+        Debug.Log("Inventory input received, toggling inventory.");
+        inventoryUI.ToggleInventory();
     }
 }

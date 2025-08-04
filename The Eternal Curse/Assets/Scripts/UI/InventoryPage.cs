@@ -9,10 +9,14 @@ public class InventoryPage : MonoBehaviour
     [SerializeField]
     private RectTransform contentPanel;
 
-    List<InventoryItem> listOfItems = new List<InventoryItem>();
+    private List<InventoryItem> listOfItems = new List<InventoryItem>();
 
-    void Start(){
+    private bool isVisible = false;
 
+    void Start()
+    {
+        // Optional: Start hidden
+        Hide();
     }
 
     public void InitializeInventoryUI(int inventorySize)
@@ -20,7 +24,7 @@ public class InventoryPage : MonoBehaviour
         for (int i = 0; i < inventorySize; i++)
         {
             InventoryItem uiItem = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
-            uiItem.transform.SetParent(contentPanel);
+            uiItem.transform.SetParent(contentPanel, false); // false = keep local scale/pos
             listOfItems.Add(uiItem);
         }
     }
@@ -28,10 +32,20 @@ public class InventoryPage : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        isVisible = true;
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
+        isVisible = false;
+    }
+
+    public void ToggleInventory()
+    {
+        if (isVisible)
+            Hide();
+        else
+            Show();
     }
 }

@@ -17,23 +17,21 @@ public class PlayerInputHandler : MonoBehaviour
     public UnityEvent<Vector2> OnFirePressed;
     public UnityEvent<Vector2> OnAimChanged;
     public UnityEvent<Vector2> OnInvPressed;  
+    
     private Vector2 aimDirection;
     private bool isAiming = false;
     
     void Awake()
     {
-        // Setup camera
         if (playerCamera == null) playerCamera = Camera.main;
     }
     
     void OnEnable()
     {
-        // Enable all input actions
         if (fireAction != null) fireAction.action.Enable();
         if (aimAction != null) aimAction.action.Enable();
         if (inventoryAction != null) inventoryAction.action.Enable();
         
-        // Subscribe to events
         if (fireAction != null) fireAction.action.performed += OnFire;
         if (inventoryAction != null) inventoryAction.action.performed += OnInventory;
         
@@ -42,26 +40,22 @@ public class PlayerInputHandler : MonoBehaviour
     
     void OnDisable()
     {
-        // Unsubscribe from events
         if (fireAction != null) fireAction.action.performed -= OnFire;
         if (inventoryAction != null) inventoryAction.action.performed -= OnInventory;
         
-        // Disable all input actions
         if (fireAction != null) fireAction.action.Disable();
         if (aimAction != null) aimAction.action.Disable();
+        if (inventoryAction != null) inventoryAction.action.Disable();
     }
     
     void Update()
     {
-        // Handle aiming (both mouse and joystick)
         if (aimAction != null)
         {
             Vector2 input = aimAction.action.ReadValue<Vector2>();
             
-            // Check if it's mouse input (large values) or joystick input (smaller values)
-            if (input.magnitude > 100f) // Mouse input typically has large values
+            if (input.magnitude > 100f)
             {
-                // Mouse input - convert screen position to world direction
                 if (playerCamera != null)
                 {
                     Vector2 worldMousePos = playerCamera.ScreenToWorldPoint(input);
@@ -69,21 +63,18 @@ public class PlayerInputHandler : MonoBehaviour
                     isAiming = true;
                 }
             }
-            else if (input.magnitude > controllerDeadzone) // Joystick input
+            else if (input.magnitude > controllerDeadzone)
             {
-                // Joystick input - use directly as direction
                 aimDirection = input.normalized;
                 isAiming = true;
             }
         }
-        
-        // If not aiming, use a default direction (forward)
+
         if (!isAiming)
         {
-            aimDirection = transform.right; // Default to facing right
+            aimDirection = transform.right;
         }
-        
-        // Notify listeners of aim direction changes
+
         OnAimChanged?.Invoke(aimDirection);
     }
     
@@ -92,20 +83,23 @@ public class PlayerInputHandler : MonoBehaviour
         Debug.Log("Fire button pressed! Aim direction: " + aimDirection);
         OnFirePressed?.Invoke(aimDirection);
     }
-    
-    // Public method to get current aim direction
+
+    private void OnInventory(InputAction.CallbackContext context)
+    {
+        Debug.Log("Inventory button pressed!");
+        OnInvPressed?.Invoke(aimDirection);
+    }
+
     public Vector2 GetAimDirection()
     {
         return aimDirection;
     }
-    
-    // Public method to check if currently aiming
+
     public bool IsAiming()
     {
         return isAiming;
     }
-    
-    // Visualize aim direction in editor
+
     void OnDrawGizmosSelected()
     {
         if (isAiming)
@@ -117,8 +111,4 @@ public class PlayerInputHandler : MonoBehaviour
             Gizmos.DrawRay(transform.position, aimDirection * 2f);
         }
     }
-
-    private void OnInventory(InputAction.CallbackContext contex){
-        
-    }
-} 
+}

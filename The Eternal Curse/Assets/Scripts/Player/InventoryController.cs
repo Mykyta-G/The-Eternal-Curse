@@ -7,29 +7,23 @@ public class InventoryController : MonoBehaviour
 
     public int inventorySize = 10;
 
+    public PlayerInputHandler inputHandler;
+
     private void Start()
     {
         inventoryUI.InitializeInventoryUI(inventorySize);
+
+        if (inputHandler != null){
+            inputHandler.OnInvPressed.AddListener(OnInvPressed);
+        }
+        else
+        {
+            Debug.LogError("CastProjectile: No PlayerInputHandler assigned!");
+        }
     }
 
     private void Update()
     {
-        var keyboard = Keyboard.current;
-        if (keyboard == null) return;
 
-        // Press I to toggle
-        if (keyboard.iKey.wasPressedThisFrame)
-        {
-            if (inventoryUI.isActiveAndEnabled)
-                inventoryUI.Hide();
-            else
-                inventoryUI.Show();
-        }
-
-        // Press Escape to close
-        if (keyboard.escapeKey.wasPressedThisFrame && inventoryUI.isActiveAndEnabled)
-        {
-            inventoryUI.Hide();
-        }
     }
 }

@@ -7,6 +7,7 @@ public class PlayerInputHandler : MonoBehaviour
     [Header("Input Actions")]
     [SerializeField] private InputActionReference fireAction;
     [SerializeField] private InputActionReference aimAction;
+    [SerializeField] private InputActionReference inventoryAction;
     
     [Header("Aiming")]
     [SerializeField] private Camera playerCamera;
@@ -15,7 +16,7 @@ public class PlayerInputHandler : MonoBehaviour
     [Header("Events")]
     public UnityEvent<Vector2> OnFirePressed;
     public UnityEvent<Vector2> OnAimChanged;
-    
+    public UnityEvent<Vector2> OnInvPressed;  
     private Vector2 aimDirection;
     private bool isAiming = false;
     
@@ -30,9 +31,11 @@ public class PlayerInputHandler : MonoBehaviour
         // Enable all input actions
         if (fireAction != null) fireAction.action.Enable();
         if (aimAction != null) aimAction.action.Enable();
+        if (inventoryAction != null) inventoryAction.action.Enable();
         
         // Subscribe to events
         if (fireAction != null) fireAction.action.performed += OnFire;
+        if (inventoryAction != null) inventoryAction.action.performed += OnInventory;
         
         Debug.Log("PlayerInputHandler enabled - Input actions should be active");
     }
@@ -41,6 +44,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         // Unsubscribe from events
         if (fireAction != null) fireAction.action.performed -= OnFire;
+        if (inventoryAction != null) inventoryAction.action.performed -= OnInventory;
         
         // Disable all input actions
         if (fireAction != null) fireAction.action.Disable();
@@ -112,5 +116,9 @@ public class PlayerInputHandler : MonoBehaviour
             Gizmos.color = Color.yellow;
             Gizmos.DrawRay(transform.position, aimDirection * 2f);
         }
+    }
+
+    private void OnInventory(InputAction.CallbackContext contex){
+        
     }
 } 

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5046223979008558709}
   - component: {fileID: 4753348000484885729}
   - component: {fileID: 1010851199501210324}
-  - component: {fileID: 2600690327438475724}
+  - component: {fileID: 7906607082560009100}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -376,6 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireAction: {fileID: 541759965278245564, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   aimAction: {fileID: 8521036029567146516, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  inventoryAction: {fileID: -9016365180082562009, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   playerCamera: {fileID: 0}
   controllerDeadzone: 0.1
   OnFirePressed:
@@ -384,7 +385,10 @@ MonoBehaviour:
   OnAimChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2600690327438475724
+  OnInvPressed:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7906607082560009100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

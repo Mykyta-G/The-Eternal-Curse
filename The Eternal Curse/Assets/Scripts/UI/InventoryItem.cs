@@ -64,6 +64,11 @@ public class InventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHand
         OnItemBeginDrag?.Invoke(this);
     }
 
+    public void OnDrag(PointerEventData eventData)
+    {
+        // This method is needed for continuous drag updates
+        // The drag preview will be updated by the InventoryPage.
+    }
     public void OnDrop(PointerEventData eventData)
     {
         OnItemDroppedOn?.Invoke(this);

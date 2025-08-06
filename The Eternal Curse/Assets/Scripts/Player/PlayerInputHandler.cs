@@ -92,7 +92,6 @@ public class PlayerInputHandler : MonoBehaviour
         OnInvPressed?.Invoke(aimDirection);
     }
 
-
     public Vector2 GetAimDirection()
     {
         return aimDirection;

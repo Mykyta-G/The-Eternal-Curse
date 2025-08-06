@@ -17,6 +17,9 @@ public class InventoryController : MonoBehaviour
 
         inventoryUI.Hide();
 
+        AddTestItem();
+        
+        // Add listener for inventory input
         if (inputHandler != null)
         {
             inputHandler.OnInvPressed.AddListener(OnInvPressed);
@@ -27,9 +30,28 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        // Update drag preview position if dragging
+        if (inventoryUI.IsDragging)
+        {
+            // Use Mouse.current.position for the new Input System
+            Vector2 mousePosition = Mouse.current.position.ReadValue();
+            inventoryUI.UpdateDragPreview(mousePosition);
+        }
+    }
+
     private void OnInvPressed(Vector2 _)
     {
         Debug.Log("Inventory input received, toggling inventory.");
         inventoryUI.ToggleInventory();
+    }
+
+    public void AddTestItem()
+    {
+        // Create a test item (you'll need to assign sprites in the inspector)
+        ItemData testItem = new ItemData("Test Item", null, 5);
+        inventoryUI.AddItem(testItem);
+        Debug.Log("Test item added to inventory.");
     }
 }

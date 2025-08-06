@@ -1126,6 +1126,10 @@ PrefabInstance:
       propertyPath: enemyHealth
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2688524996275558529, guid: 52c5714d3e6af4b45a05c9628eea7011, type: 3}
+      propertyPath: enableStatusEffects
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5074479142721291617, guid: 52c5714d3e6af4b45a05c9628eea7011, type: 3}
       propertyPath: m_Name
       value: Spike

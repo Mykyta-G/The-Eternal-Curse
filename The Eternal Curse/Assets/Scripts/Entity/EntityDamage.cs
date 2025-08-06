@@ -1,16 +1,45 @@
 using UnityEngine;
 
-public class Damage : MonoBehaviour
+[System.Serializable]
+public class StatusEffectData
 {
-    public int damage;
+    public StatusEffectType effectType;
+    [Range(0f, 100f)]
+    public float amountPerHit = 25f;
+}
+
+public class EntityDamage : MonoBehaviour
+{
+    public int damage = 10;
+    public bool enableStatusEffects = false;
+    public float fillSpeed = 0.25f;
+    public float maxStatus = 100f;
+    public StatusEffectData[] statusEffects;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.GetComponent<Health>() != null && 
-            !other.gameObject.GetComponent<Health>().isInvincible && 
-            other.gameObject.CompareTag("Player"))
+        Health targetHealth = other.gameObject.GetComponent<Health>();
+
+        if (targetHealth != null && !targetHealth.isInvincible)
         {
-            other.gameObject.GetComponent<Health>().TakeDamage(damage);
+            targetHealth.TakeDamage(damage);
+
+            if (enableStatusEffects)
+            {
+                EntityStatusEffect targetStatus = other.gameObject.GetComponent<EntityStatusEffect>();
+                if (targetStatus != null)
+                {
+                    targetStatus.Initialize(fillSpeed, maxStatus);
+
+                    foreach (var effect in statusEffects)
+                    {
+                        if (effect.effectType != StatusEffectType.None)
+                        {
+                            targetStatus.ApplyEffect(effect.effectType, effect.amountPerHit);
+                        }
+                    }
+                }
+            }
         }
     }
 }

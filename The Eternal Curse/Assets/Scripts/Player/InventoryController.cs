@@ -15,6 +15,8 @@ public class InventoryController : MonoBehaviour
     {
         inventoryUI.InitializeInventoryUI(inventorySize);
 
+        inventoryUI.Hide();
+
         if (inputHandler != null)
         {
             inputHandler.OnInvPressed.AddListener(OnInvPressed);

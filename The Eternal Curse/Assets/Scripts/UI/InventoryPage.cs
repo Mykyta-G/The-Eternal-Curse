@@ -13,10 +13,6 @@ public class InventoryPage : MonoBehaviour
 
     private bool isVisible = false;
 
-    void Start()
-    {
-        Hide();
-    }
 
     public void InitializeInventoryUI(int inventorySize)
     {
@@ -32,6 +28,9 @@ public class InventoryPage : MonoBehaviour
             uiItem.OnItemEndDrag += HandleItemEndDrag;
             uiItem.OnRightMouseBtnClick += HandleShowItemAction;
         }
+
+        // Make sure inventory is hidden and state synced after initialization
+        Hide();
     }
 
     private void HandleItemSelection(InventoryItem obj)
@@ -63,12 +62,14 @@ public class InventoryPage : MonoBehaviour
     {
         gameObject.SetActive(true);
         isVisible = true;
+        Debug.Log("Inventory shown, isVisible = " + isVisible);
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
         isVisible = false;
+        Debug.Log("Inventory hidden, isVisible = " + isVisible);
     }
 
     public void ToggleInventory()

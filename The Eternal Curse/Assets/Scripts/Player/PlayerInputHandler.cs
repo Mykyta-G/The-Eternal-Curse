@@ -33,7 +33,7 @@ public class PlayerInputHandler : MonoBehaviour
         if (inventoryAction != null) inventoryAction.action.Enable();
         
         if (fireAction != null) fireAction.action.performed += OnFire;
-        if (inventoryAction != null) inventoryAction.action.performed += OnInventory;
+        if (inventoryAction != null) inventoryAction.action.performed += HandleInventory;
         
         Debug.Log("PlayerInputHandler enabled - Input actions should be active");
     }
@@ -41,7 +41,7 @@ public class PlayerInputHandler : MonoBehaviour
     void OnDisable()
     {
         if (fireAction != null) fireAction.action.performed -= OnFire;
-        if (inventoryAction != null) inventoryAction.action.performed -= OnInventory;
+        if (inventoryAction != null) inventoryAction.action.performed -= HandleInventory;
         
         if (fireAction != null) fireAction.action.Disable();
         if (aimAction != null) aimAction.action.Disable();
@@ -84,11 +84,14 @@ public class PlayerInputHandler : MonoBehaviour
         OnFirePressed?.Invoke(aimDirection);
     }
 
-    private void OnInventory(InputAction.CallbackContext context)
+    public void OnInventory() { }
+
+    private void HandleInventory(InputAction.CallbackContext context)
     {
         Debug.Log("Inventory button pressed!");
         OnInvPressed?.Invoke(aimDirection);
     }
+
 
     public Vector2 GetAimDirection()
     {

@@ -13,10 +13,8 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
-        // Initialize the inventory with empty slots
         inventoryUI.InitializeInventoryUI(inventorySize);
 
-        // Hook into the inventory input event
         if (inputHandler != null)
         {
             inputHandler.OnInvPressed.AddListener(OnInvPressed);

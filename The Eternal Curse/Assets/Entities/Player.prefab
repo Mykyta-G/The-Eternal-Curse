@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4753348000484885729}
   - component: {fileID: 1010851199501210324}
   - component: {fileID: 1622921142546360931}
+  - component: {fileID: 8582017490495110808}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -399,3 +400,18 @@ MonoBehaviour:
   attackSpeed: 1
   mana: 0
   armor: 0
+--- !u!114 &8582017490495110808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637520176786022895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c6b02d4542f14858ad76d8fd43d236f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Poison: {fileID: 590460816991061781, guid: 475162fd6679f4b669dc7d53277fdc32, type: 3}
+  Frost: {fileID: 851892726814958966, guid: 90c636e3be03247ada9bb3be4760806b, type: 3}
+  Burn: {fileID: 9036070825554799486, guid: 981eb51c55156416883b82f4b1975d23, type: 3}

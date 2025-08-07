@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 7c6b02d4542f14858ad76d8fd43d236f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - Poison: {instanceID: 0}
+  - Frost: {instanceID: 0}
+  - Burn: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

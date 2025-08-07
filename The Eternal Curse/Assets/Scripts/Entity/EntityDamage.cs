@@ -30,26 +30,54 @@ public class EntityDamage : MonoBehaviour
         if (targetHealth != null && !targetHealth.isInvincible)
         {
             targetHealth.TakeDamage(damage);
+            Debug.Log($"[{gameObject.name}] Dealt {damage} damage to {other.gameObject.name}");
 
             if (enableStatusEffects)
             {
+                Debug.Log($"[{gameObject.name}] Status effects enabled, checking for EntityStatusEffect on {other.gameObject.name}");
+                
                 EntityStatusEffect targetStatus = other.gameObject.GetComponent<EntityStatusEffect>();
                 if (targetStatus != null)
                 {
+                    Debug.Log($"[{gameObject.name}] Found EntityStatusEffect on {other.gameObject.name}, initializing with maxStatus: {maxStatus}");
                     targetStatus.Initialize(maxStatus);
 
-                    foreach (var effect in statusEffects)
+                    if (statusEffects != null && statusEffects.Length > 0)
                     {
-                        if (effect.effectType != StatusEffectType.None)
+                        Debug.Log($"[{gameObject.name}] Applying {statusEffects.Length} status effects");
+                        foreach (var effect in statusEffects)
                         {
-                            targetStatus.ApplyEffect(effect.effectType, effect.amountPerHit);
+                            if (effect.effectType != StatusEffectType.None)
+                            {
+                                Debug.Log($"[{gameObject.name}] Applying {effect.effectType} with amount: {effect.amountPerHit}");
+                                targetStatus.ApplyEffect(effect.effectType, effect.amountPerHit);
+                            }
                         }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[{gameObject.name}] No status effects configured in statusEffects array");
                     }
                 }
                 else
                 {
-                    Debug.LogWarning($"No EntityStatusEffect component found on {other.gameObject.name}");
+                    Debug.LogWarning($"[{gameObject.name}] No EntityStatusEffect component found on {other.gameObject.name}");
                 }
+            }
+            else
+            {
+                Debug.Log($"[{gameObject.name}] Status effects disabled");
+            }
+        }
+        else
+        {
+            if (targetHealth == null)
+            {
+                Debug.Log($"[{gameObject.name}] No Health component found on {other.gameObject.name}");
+            }
+            else if (targetHealth.isInvincible)
+            {
+                Debug.Log($"[{gameObject.name}] {other.gameObject.name} is invincible, no damage dealt");
             }
         }
     }

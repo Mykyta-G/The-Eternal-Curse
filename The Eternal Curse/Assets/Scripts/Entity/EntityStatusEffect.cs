@@ -11,6 +11,7 @@ public enum StatusEffectType
 
 public class EntityStatusEffect : MonoBehaviour
 {
+    [Header("UI Components")]
     public Image Poison;
     public Image Frost;
     public Image Burn;
@@ -27,6 +28,7 @@ public class EntityStatusEffect : MonoBehaviour
 
     void Update()
     {
+        // Update current values from targets
         poisonValue = poisonTarget;
         frostValue = frostTarget;
         burnValue = burnTarget;
@@ -36,22 +38,27 @@ public class EntityStatusEffect : MonoBehaviour
 
     private void UpdateUI()
     {
-        UpdateBar(Poison, poisonValue);
-        UpdateBar(Frost, frostValue);
-        UpdateBar(Burn, burnValue);
+        UpdateBar(Poison, poisonValue, "Poison");
+        UpdateBar(Frost, frostValue, "Frost");
+        UpdateBar(Burn, burnValue, "Burn");
     }
 
-    private void UpdateBar(Image bar, float value)
+    private void UpdateBar(Image bar, float value, string effectName)
     {
         if (bar == null) 
         {
-            Debug.LogWarning($"Status effect bar is null! Value: {value}");
+            Debug.LogWarning($"[{gameObject.name}] {effectName} UI Image is not assigned!");
             return;
         }
 
         bool shouldBeVisible = value > 0f;
         bar.fillAmount = value / maxStatus;
-        bar.gameObject.SetActive(shouldBeVisible);
+        
+        // Only change visibility if it's different from current state
+        if (bar.gameObject.activeSelf != shouldBeVisible)
+        {
+            bar.gameObject.SetActive(shouldBeVisible);
+        }
     }
 
     public void ApplyEffect(StatusEffectType effectType, float amount)
@@ -60,43 +67,33 @@ public class EntityStatusEffect : MonoBehaviour
         {
             case StatusEffectType.Poison:
                 poisonTarget = Mathf.Clamp(poisonTarget + amount, 0f, maxStatus);
-                Debug.Log($"Poison applied to {gameObject.name}: +{amount} (Total: {poisonTarget})");
-                if (Poison == null) Debug.LogWarning("Poison UI Image is not assigned!");
+                if (Poison == null) Debug.LogWarning($"[{gameObject.name}] Poison UI Image is not assigned!");
                 break;
 
             case StatusEffectType.Frost:
                 frostTarget = Mathf.Clamp(frostTarget + amount, 0f, maxStatus);
-                Debug.Log($"Frost applied to {gameObject.name}: +{amount} (Total: {frostTarget})");
-                if (Frost == null) Debug.LogWarning("Frost UI Image is not assigned!");
+                if (Frost == null) Debug.LogWarning($"[{gameObject.name}] Frost UI Image is not assigned!");
                 break;
 
             case StatusEffectType.Burn:
                 burnTarget = Mathf.Clamp(burnTarget + amount, 0f, maxStatus);
-                Debug.Log($"Burn applied to {gameObject.name}: +{amount} (Total: {burnTarget})");
-                if (Burn == null) Debug.LogWarning("Burn UI Image is not assigned!");
+                if (Burn == null) Debug.LogWarning($"[{gameObject.name}] Burn UI Image is not assigned!");
                 break;
 
             case StatusEffectType.None:
             default:
-                Debug.Log("No status effect applied.");
                 break;
         }
+        
+        // Force immediate UI update
+        UpdateUI();
     }
 
-    // Temporary debug method - call this from Start() to test if UI bars work
     void Start()
     {
-        // Uncomment the line below to test if UI bars show up
-        // TestUIBars();
-    }
-    
-    // Temporary debug method - uncomment the call in Start() to test
-    void TestUIBars()
-    {
-        Debug.Log("Testing UI bars...");
-        poisonTarget = 50f;
-        frostTarget = 75f;
-        burnTarget = 25f;
-        Debug.Log($"Set test values - Poison: {poisonTarget}, Frost: {frostTarget}, Burn: {burnTarget}");
+        // Check if UI components are assigned
+        if (Poison == null) Debug.LogWarning($"[{gameObject.name}] Poison UI Image is not assigned!");
+        if (Frost == null) Debug.LogWarning($"[{gameObject.name}] Frost UI Image is not assigned!");
+        if (Burn == null) Debug.LogWarning($"[{gameObject.name}] Burn UI Image is not assigned!");
     }
 }

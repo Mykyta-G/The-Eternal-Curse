@@ -1073,6 +1073,18 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8792969712842997019, guid: d1e01386c697fe348b17dd7b0f32c23b, type: 3}
+      propertyPath: frostSlowDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792969712842997019, guid: d1e01386c697fe348b17dd7b0f32c23b, type: 3}
+      propertyPath: burnIgnitionDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792969712842997019, guid: d1e01386c697fe348b17dd7b0f32c23b, type: 3}
+      propertyPath: statusEffects.Array.data[0].effectType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8792969712842997019, guid: d1e01386c697fe348b17dd7b0f32c23b, type: 3}
       propertyPath: statusEffects.Array.data[0].amountPerHit
       value: 50
       objectReference: {fileID: 0}

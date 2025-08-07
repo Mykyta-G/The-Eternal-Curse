@@ -187,13 +187,19 @@ public class EntityStatusEffect : MonoBehaviour
         {
             burnEffectActive = true;
             burnEffectTimer = 0f; // Reset burn effect timer
+            
+            // Apply instant damage and reset bar immediately
             if (effectSettings.TryGetValue(StatusEffectType.Burn, out EffectSettings burnSettings))
             {
                 ApplyBurnDamage(burnSettings.ignitionDamage);
             }
+            burnTarget = 0f;
+            burnValue = 0f;
+            burnAtMax = false;
+            burnMaxTimer = 0f;
         }
 
-        // Update burn effect timer
+        // Update burn effect timer (for health bar color)
         if (burnEffectActive)
         {
             burnEffectTimer += Time.deltaTime;
@@ -213,7 +219,6 @@ public class EntityStatusEffect : MonoBehaviour
             }
         }
 
-        // Update frost effect duration
         if (frostEffectActive)
         {
             if (effectSettings.TryGetValue(StatusEffectType.Frost, out EffectSettings frostSettings))
@@ -230,7 +235,6 @@ public class EntityStatusEffect : MonoBehaviour
             }
         }
 
-        // Update health bar color based on active effects
         UpdateHealthBarColor();
     }
 
@@ -409,7 +413,6 @@ public class EntityStatusEffect : MonoBehaviour
             return;
         }
 
-        // Priority: Burn > Frost > Poison > Normal
         if (burnEffectActive && effectSettings.TryGetValue(StatusEffectType.Burn, out EffectSettings burnSettings))
         {
             HealthBar.color = burnSettings.color;

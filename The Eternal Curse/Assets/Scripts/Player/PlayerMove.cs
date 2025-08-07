@@ -5,6 +5,14 @@ using System.Collections;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
+    
+    // Public property to access moveSpeed for status effects
+    public float MoveSpeed
+    {
+        get { return moveSpeed; }
+        set { moveSpeed = value; }
+    }
+    
     private Vector2 moveInput;
     private PlayerInput playerInput;
     private bool canDash = true;

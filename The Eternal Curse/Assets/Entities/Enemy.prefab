@@ -353,8 +353,17 @@ MonoBehaviour:
   enableStatusEffects: 1
   maxStatus: 100
   statusEffects:
-  - effectType: 3
+  - effectType: 2
     amountPerHit: 30
+  poisonTickDamage: 0
+  poisonTickInterval: 0
+  poisonTickDuration: 0
+  burnIgnitionDamage: 0
+  frostSlowAmount: 10
+  poisonColor: {r: 0.2, g: 0.8, b: 0.2, a: 1}
+  frostColor: {r: 0.5, g: 0.8, b: 1, a: 1}
+  burnColor: {r: 1, g: 0.4, b: 0.2, a: 1}
+  normalHealthColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &504030319626472350
 MonoBehaviour:
   m_ObjectHideFlags: 0

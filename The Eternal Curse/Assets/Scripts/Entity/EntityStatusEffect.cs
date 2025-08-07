@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum StatusEffectType
 {
@@ -16,10 +17,17 @@ public class EntityStatusEffect : MonoBehaviour
     public Image Frost;
     public Image Burn;
 
+    [Header("Position Settings")]
+    public float barSpacing = 30f; // Distance between bars
+    public float startYPosition = 30f; // Starting Y position for first bar
+
     private float poisonValue, frostValue, burnValue;
     private float poisonTarget, frostTarget, burnTarget;
 
     private float maxStatus = 100f;
+
+    // Track which effects are active and their order
+    private List<StatusEffectType> activeEffects = new List<StatusEffectType>();
 
     public void Initialize(float maxStatus)
     {
@@ -41,6 +49,9 @@ public class EntityStatusEffect : MonoBehaviour
         UpdateBar(Poison, poisonValue, "Poison");
         UpdateBar(Frost, frostValue, "Frost");
         UpdateBar(Burn, burnValue, "Burn");
+        
+        // Update positions based on active effects
+        UpdatePositions();
     }
 
     private void UpdateBar(Image bar, float value, string effectName)
@@ -54,10 +65,45 @@ public class EntityStatusEffect : MonoBehaviour
         bool shouldBeVisible = value > 0f;
         bar.fillAmount = value / maxStatus;
         
-        // Only change visibility if it's different from current state
         if (bar.gameObject.activeSelf != shouldBeVisible)
         {
             bar.gameObject.SetActive(shouldBeVisible);
+        }
+    }
+
+    private void UpdatePositions()
+    {
+        activeEffects.Clear();
+        
+        if (poisonValue > 0f) activeEffects.Add(StatusEffectType.Poison);
+        if (frostValue > 0f) activeEffects.Add(StatusEffectType.Frost);
+        if (burnValue > 0f) activeEffects.Add(StatusEffectType.Burn);
+
+        // Position each active effect
+        for (int i = 0; i < activeEffects.Count; i++)
+        {
+            Image effectBar = GetBarForEffect(activeEffects[i]);
+            
+            if (effectBar != null)
+            {
+                RectTransform rectTransform = effectBar.GetComponent<RectTransform>();
+                if (rectTransform != null)
+                {
+                    float yPos = startYPosition - (i * barSpacing);
+                    rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, yPos);
+                }
+            }
+        }
+    }
+
+    private Image GetBarForEffect(StatusEffectType effectType)
+    {
+        switch (effectType)
+        {
+            case StatusEffectType.Poison: return Poison;
+            case StatusEffectType.Frost: return Frost;
+            case StatusEffectType.Burn: return Burn;
+            default: return null;
         }
     }
 
@@ -85,7 +131,6 @@ public class EntityStatusEffect : MonoBehaviour
                 break;
         }
         
-        // Force immediate UI update
         UpdateUI();
     }
 

@@ -150,10 +150,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 20
   enableStatusEffects: 1
-  fillSpeed: 0.25
   maxStatus: 100
   statusEffects:
   - effectType: 1
+    amountPerHit: 50
+  - effectType: 3
     amountPerHit: 50
 --- !u!50 &5759492019187070224
 Rigidbody2D:

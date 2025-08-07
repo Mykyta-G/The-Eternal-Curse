@@ -350,6 +350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 25
+  enableStatusEffects: 1
+  maxStatus: 100
+  statusEffects:
+  - effectType: 3
+    amountPerHit: 30
 --- !u!114 &504030319626472350
 MonoBehaviour:
   m_ObjectHideFlags: 0

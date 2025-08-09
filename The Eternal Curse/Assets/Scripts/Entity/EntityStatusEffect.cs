@@ -91,6 +91,43 @@ public class EntityStatusEffect : MonoBehaviour
         if (Frost == null) Debug.LogWarning($"[{gameObject.name}] Frost UI Image is not assigned!");
         if (Burn == null) Debug.LogWarning($"[{gameObject.name}] Burn UI Image is not assigned!");
         if (HealthBar == null) Debug.LogWarning($"[{gameObject.name}] Health Bar is not assigned!");
+        
+        // Initialize bar positions
+        InitializeBarPositions();
+    }
+    
+    private void InitializeBarPositions()
+    {
+        // Set initial positions for all bars
+        if (Poison != null)
+        {
+            RectTransform poisonRect = Poison.GetComponent<RectTransform>();
+            if (poisonRect != null)
+            {
+                Vector2 currentPos = poisonRect.anchoredPosition;
+                poisonRect.anchoredPosition = new Vector2(currentPos.x, 100f);
+            }
+        }
+        
+        if (Frost != null)
+        {
+            RectTransform frostRect = Frost.GetComponent<RectTransform>();
+            if (frostRect != null)
+            {
+                Vector2 currentPos = frostRect.anchoredPosition;
+                frostRect.anchoredPosition = new Vector2(currentPos.x, 0f);
+            }
+        }
+        
+        if (Burn != null)
+        {
+            RectTransform burnRect = Burn.GetComponent<RectTransform>();
+            if (burnRect != null)
+            {
+                Vector2 currentPos = burnRect.anchoredPosition;
+                burnRect.anchoredPosition = new Vector2(currentPos.x, -100f);
+            }
+        }
     }
 
     void Update()
@@ -345,7 +382,7 @@ public class EntityStatusEffect : MonoBehaviour
         if (frostValue > 0f) activeEffects.Add(StatusEffectType.Frost);
         if (burnValue > 0f) activeEffects.Add(StatusEffectType.Burn);
 
-        // Position each active effect with smooth transitions
+        // Position each active effect with fixed positions (100, 0, -100)
         for (int i = 0; i < activeEffects.Count; i++)
         {
             Image effectBar = GetBarForEffect(activeEffects[i]);
@@ -355,12 +392,21 @@ public class EntityStatusEffect : MonoBehaviour
                 RectTransform rectTransform = effectBar.GetComponent<RectTransform>();
                 if (rectTransform != null)
                 {
-                    float targetYPos = startYPosition - (i * barSpacing);
-                    float currentYPos = rectTransform.anchoredPosition.y;
+                    float targetYPos;
+                    switch (i)
+                    {
+                        case 0: targetYPos = 100f; break;  // First active bar
+                        case 1: targetYPos = 0f; break;    // Second active bar
+                        case 2: targetYPos = -100f; break; // Third active bar
+                        default: targetYPos = 100f; break;
+                    }
+                    
+                    Vector2 currentPos = rectTransform.anchoredPosition;
+                    Vector2 targetPos = new Vector2(currentPos.x, targetYPos);
                     
                     // Smoothly move to target position
-                    float newYPos = Mathf.Lerp(currentYPos, targetYPos, smoothPositionSpeed * Time.deltaTime);
-                    rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, newYPos);
+                    Vector2 newPos = Vector2.Lerp(currentPos, targetPos, smoothPositionSpeed * Time.deltaTime);
+                    rectTransform.anchoredPosition = newPos;
                 }
             }
         }

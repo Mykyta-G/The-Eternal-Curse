@@ -20,8 +20,8 @@ public class EntityStatusEffect : MonoBehaviour
     public Image HealthBar;
 
     [Header("Position Settings")]
-    public float barSpacing = 30f; // Distance between bars
-    public float startYPosition = 30f; // Starting Y position for first bar
+    public float barSpacing = 100f; // Distance between bars
+    public float startYPosition = 100f; // Starting Y position for first bar
 
     [Header("Transition Settings")]
     public float fillSpeed = 5f; // How fast bars fill up

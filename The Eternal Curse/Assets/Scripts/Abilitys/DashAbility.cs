@@ -13,7 +13,6 @@ public class DashAbility : Ability
     private TrailRenderer trailRenderer;
     private Rigidbody2D playerRigidbody;
     private Health playerHealth;
-    private MonoBehaviour coroutineRunner;
     
     public override void Activate()
     {
@@ -27,13 +26,17 @@ public class DashAbility : Ability
                 trailRenderer = playerObject.GetComponentInChildren<TrailRenderer>();
                 playerRigidbody = playerObject.GetComponent<Rigidbody2D>();
                 playerHealth = playerObject.GetComponent<Health>();
-                coroutineRunner = playerObject.GetComponent<MonoBehaviour>();
             }
         }
         
-        if (coroutineRunner != null)
+        if (playerObject != null)
         {
-            coroutineRunner.StartCoroutine(PerformDash());
+            // Get any MonoBehaviour component to run the coroutine
+            MonoBehaviour monoBehaviour = playerObject.GetComponent<MonoBehaviour>();
+            if (monoBehaviour != null)
+            {
+                monoBehaviour.StartCoroutine(PerformDash());
+            }
         }
     }
     
@@ -47,15 +50,29 @@ public class DashAbility : Ability
         
         // Get dash direction from player input
         Vector2 dashDirection = Vector2.zero;
+        
+        // Try to get input from PlayerMove first
         if (playerMove != null)
         {
             dashDirection = playerMove.GetMoveInput();
         }
         
+        // If no input from PlayerMove, try to get current input directly
+        if (dashDirection.magnitude == 0)
+        {
+            // Check for current input keys
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) dashDirection.y += 1;
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) dashDirection.y -= 1;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) dashDirection.x -= 1;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) dashDirection.x += 1;
+        }
+        
+        // If still no input, dash in the direction the player is facing
         if (dashDirection.magnitude == 0)
         {
             dashDirection = Vector2.right * Mathf.Sign(playerObject.transform.localScale.x);
         }
+        
         dashDirection.Normalize();
         
         // Apply dash force

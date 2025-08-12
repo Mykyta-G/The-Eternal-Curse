@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fed2c79b4b0834ab086b88e1cd588c75, type: 3}
-  m_Name: Dash
+  m_Name: Dash Ability
   m_EditorClassIdentifier: 
   name: Dash
   cooldownTime: 1

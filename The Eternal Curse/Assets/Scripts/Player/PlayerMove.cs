@@ -43,17 +43,6 @@ public class PlayerMove : MonoBehaviour
     {
         Vector3 movement = new Vector3(moveInput.x, moveInput.y, 0) * moveSpeed * Time.deltaTime;
         transform.Translate(movement);
-        
-        // Check for dash input (Space key)
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            // Try to trigger dash ability if available
-            var abilityHolder = GetComponent<AbilityHolder>();
-            if (abilityHolder != null && abilityHolder.IsAbilityReady())
-            {
-                abilityHolder.TriggerAbility();
-            }
-        }
     }
 
     private void FixedUpdate()

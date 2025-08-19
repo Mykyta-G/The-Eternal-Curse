@@ -7,6 +7,7 @@ public class PlayerStats : MonoBehaviour
     public int mana;
     private int maxArmor = 100;
     public int armor;
+    public int MaxMana => maxMana;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

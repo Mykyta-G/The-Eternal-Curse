@@ -49,9 +49,17 @@ public class CastProjectile : MonoBehaviour
     {
         Debug.Log("CastProjectile: Received fire event with direction: " + aimDirection);
         direction = aimDirection;
-        if (playerStats.mana >= projectilePrefab.GetComponent<Projectile>().manaCost)
+
+        int manaCost = 0;
+        Projectile projectileComponent = projectilePrefab != null ? projectilePrefab.GetComponent<Projectile>() : null;
+        if (projectileComponent != null)
         {
-            playerStats.useMana(projectilePrefab.GetComponent<Projectile>().manaCost);
+            manaCost = projectileComponent.manaCost;
+        }
+
+        if (playerStats != null && playerStats.mana >= manaCost)
+        {
+            playerStats.useMana(manaCost);
             FireProjectile();
         }
     }
